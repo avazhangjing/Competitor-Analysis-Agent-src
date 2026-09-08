@@ -1,0 +1,24 @@
+# 本地配置和密钥
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# 依赖和缓存
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# 构建产物与日志
+dist/
+build/
+*.log
+
+# 编辑器和系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
