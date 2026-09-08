@@ -6,7 +6,7 @@
 
 | 方式 | 仓库 | 适用场景 |
 |------|------|----------|
-| **方式一：镜像包直接部署** | [Competitor-Analysis-Agent](https://github.com/B0006CODE/Competitor-Analysis-Agent) | 只想快速上线，不需要改代码。加载现成镜像即可运行 |
+| **方式一：镜像包直接部署** | [Competitor-Analysis-Agent](https://github.com/avazhangjing/Competitor-Analysis-Agent) | 只想快速上线，不需要改代码。加载现成镜像即可运行 |
 | **方式二：源码构建部署**（本仓库） | `Competitor-Analysis-Agent-src` | 需要二次开发、审计源码。需自行 `docker build`（3-10 分钟） |
 
 两个仓库内容一致（同一版本发布），按需二选一即可。
@@ -16,7 +16,7 @@
 本仓库无 LFS 大文件，普通 git clone 即可：
 
 ```bash
-git clone https://github.com/B0006CODE/Competitor-Analysis-Agent-src.git
+git clone https://github.com/avazhangjing/Competitor-Analysis-Agent-src.git
 cd Competitor-Analysis-Agent-src
 ```
 
@@ -28,7 +28,7 @@ apt-get install -y git-lfs        # Debian/Ubuntu；CentOS: yum install -y git-l
 git lfs install
 
 # 2. 拉取镜像仓库（镜像包 + deploy.sh + .env.example）
-git clone https://github.com/B0006CODE/Competitor-Analysis-Agent.git
+git clone https://github.com/avazhangjing/Competitor-Analysis-Agent.git
 cd Competitor-Analysis-Agent
 
 # 3. 校验 tar 约 176MB（若只有 134 字节执行 git lfs pull），然后一键部署
