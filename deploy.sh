@@ -19,7 +19,7 @@ IMAGE_NAME="competitive-analysis-agent:latest"
 TAR_FILE="competitive-analysis-agent.tar"
 PORT="${PORT:-8000}"
 DATA_VOLUME="${DATA_VOLUME:-analysis-data}"
-VERSION="${VERSION:-v1.5.9}"
+VERSION="${VERSION:-v1.5.10}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
