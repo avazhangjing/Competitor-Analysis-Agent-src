@@ -2,6 +2,21 @@
 
 本项目版本号遵循《钢研国创DMMA项目软件版本管理规范》：三段式 `vX.Y.Z`，生产环境版本号与 Git 标签一致，每个版本对应一次 git 版本迭代。
 
+## v1.5.10 - 2026-09-09
+
+### 问题修复
+
+- **安全检查「假 ok」**：修复 `.env` 中 API Key 未填真实值（仍为模板占位符，如 `your_zhihu_access_secret`）时，`/api/health` 等检查全部显示 ok/已配置的问题
+  - 根因（`app/config.py`）：整条配置检查链路（`/api/health` 端点、`/api/analysis/start` 校验、前端「来源」chips 置灰、`resolve_provider` 回退）均只判断 `bool(非空)`，从不验证 Key 真实性；模板占位符非空字符串全部通过检查，显示「假 ok」，且运行时搜索静默失败返回空结果
+  - 修复（`app/config.py`）：新增 `_normalize_secret` + `field_validator`，对 `LLM/TAVILY/ZHIHU/BOCHA` 四个 API Key 做归一化——去首尾空白，`your_*`/`xxx`/`changeme`/`placeholder`/`<`/`{` 等占位符前缀统一视为未配置（空字符串）；一处修复全链路生效：`/api/health` 变 `degraded`、未配置来源前端置灰不可选、`/start` 返回 400
+- **版本号**：更新至 v1.5.10，重新构建镜像并部署
+
+### 版本追溯
+
+- 修复「安全检查占位符 API Key 判定为未配置」= v1.5.10
+
+---
+
 ## v1.5.9 - 2026-09-02
 
 ### 问题修复

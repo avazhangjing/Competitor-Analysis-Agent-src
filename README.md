@@ -1,4 +1,4 @@
-# 竞品分析 Agent v1.5.9 - 源码包（源码仓库）
+# 竞品分析 Agent v1.5.10 - 源码包（源码仓库）
 
 本仓库为完整源码（含前端构建产物），可自行构建 Docker 镜像并部署，适合二次开发与源码审计。
 
@@ -32,7 +32,7 @@ git clone https://github.com/avazhangjing/Competitor-Analysis-Agent.git
 cd Competitor-Analysis-Agent
 
 # 3. 校验 tar 约 176MB（若只有 134 字节执行 git lfs pull），然后一键部署
-ls -lh competitive-analysis-agent-v1.5.9.tar
+ls -lh competitive-analysis-agent-v1.5.10.tar
 cp .env.example .env && vi .env    # 必填: LLM_API_KEY, TAVILY_API_KEY
 bash deploy.sh
 ```
@@ -46,7 +46,7 @@ bash deploy.sh
 docker build -t competitive-analysis-agent:latest .
 
 # 可选：导出镜像包，便于拷贝到其他机器
-docker save -o competitive-analysis-agent-v1.5.9.tar competitive-analysis-agent:latest
+docker save -o competitive-analysis-agent-v1.5.10.tar competitive-analysis-agent:latest
 ```
 
 ### 2. 配置环境变量
@@ -101,7 +101,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 - 访问地址：`http://<服务器IP>:8000`
 - 健康检查：`curl http://localhost:8000/api/health`
-- 版本接口：`curl http://localhost:8000/api/version` → `{"version":"v1.5.9",...}`
+- 版本接口：`curl http://localhost:8000/api/version` → `{"version":"v1.5.10",...}`
 - 查看日志：`docker logs -f competitive-analysis`
 
 ## 五、常见问题
@@ -138,6 +138,6 @@ Competitor-Analysis-Agent-src/
 
 ## 七、版本信息
 
-- 版本号：v1.5.9（2026-09-02）
-- 本版主要变更：修复报告弹窗四个来源标签被拉伸成竖条的问题（点开均为「标签胶囊行 + 目录/报告内部滚动」正常形态）
+- 版本号：v1.5.10（2026-09-09）
+- 本版主要变更：修复安全检查「假 ok」——`.env` 中 API Key 为模板占位符（如 `your_zhihu_access_secret`）时仍判定为已配置的问题；占位符现视为未配置（`/api/health` 显示 degraded、前端来源置灰、`/start` 返回 400）
 - 变更记录：见 CHANGELOG.md

@@ -1,10 +1,23 @@
 from functools import lru_cache
 from pathlib import Path
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
+
+# 占位符前缀（来自 .env.example 模板，未填真实值）：视为未配置，避免「假 ok」
+_PLACEHOLDER_PREFIXES = ("your_", "xxx", "changeme", "placeholder", "<", "{", "「", "【")
+
+
+def _normalize_secret(value: object) -> str:
+    """API Key 归一化：去首尾空白；占位符/空白视为未配置（空字符串）。"""
+    if value is None:
+        return ""
+    v = str(value).strip()
+    if not v or v.lower().startswith(_PLACEHOLDER_PREFIXES):
+        return ""
+    return v
 
 
 class Settings(BaseSettings):
@@ -27,6 +40,11 @@ class Settings(BaseSettings):
     app_version: str = Field(default="v1.0.0", alias="APP_VERSION")
     # 环境：显式指定 test/staging/prod；默认 auto 按版本号后缀推断（beta→test, rc→staging, 其余→prod）
     app_env: str = Field(default="auto", alias="APP_ENV")
+
+    @field_validator("llm_api_key", "tavily_api_key", "zhihu_api_key", "bocha_api_key", mode="before")
+    @classmethod
+    def _clean_api_keys(cls, v: object) -> str:
+        return _normalize_secret(v)
 
     @property
     def effective_env(self) -> str:
